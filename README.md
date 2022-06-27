@@ -11,3 +11,6 @@
     3. Go to project terminal and run command php -S localhost:4000
     
     Note: PHP and composer must be installed on machine
+
+# Unit Test Cases
+    - Unit Test Cases are written in tests/Unit folder.

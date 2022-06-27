@@ -3,6 +3,8 @@
     namespace Surendra\CartCheckoutFeature;
 
     use Surendra\CartCheckoutFeature\Contracts\ProductInterface;
+use Surendra\CartCheckoutFeature\Exceptions\ItemNotFoundException;
+
     /**
      * Product class.
      */
@@ -68,7 +70,7 @@
             'D' => [
                 [
                     'priority' => 1,
-                    'description' => '1 for 25',
+                    'description' => '1 for 5',
                     'purchase_with' => 'A',
                     'price' => 5,
                 ]
@@ -94,7 +96,7 @@
                 return $this->products[$sku]['price'];
             }
 
-            throw new \Exception("Product not found");
+            throw new ItemNotFoundException();
         }
         
         /**
@@ -107,7 +109,7 @@
                 return $this->products[$sku]['name'];
             }
 
-            throw new \Exception("Product not found");
+            throw new ItemNotFoundException();
         }
 
         /**

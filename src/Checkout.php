@@ -2,6 +2,7 @@
     namespace Surendra\CartCheckoutFeature;
 
     use Surendra\CartCheckoutFeature\Contracts\CheckoutInterface;
+    use Surendra\CartCheckoutFeature\Exceptions\NoItemAddedException;
     use Surendra\CartCheckoutFeature\ProductMaster;
     class Checkout implements CheckoutInterface
     {
@@ -21,6 +22,9 @@
          */
         public function getTotal() : int|float
         {
+            if(empty($this->items)){
+                throw new NoItemAddedException();
+            }
             $this->total = array_reduce($this->items, function($carry, $item) {
                 return $carry + $this->calculateItemPrice($item);
             }, 0);
@@ -34,6 +38,9 @@
          */
         public function getItems() : array
         {
+            if(empty($this->items)){
+                throw new NoItemAddedException();
+            }
             return $this->items;
         }
         
@@ -42,9 +49,12 @@
          * @param array $item The item to add.
          *
          */
-        public function addItem(array $item)
+        public function addItem(array $item):array
         {
-            $this->items[] = $item;
+            if(!empty($item) && count($item) > 0){
+                $this->items[] = $item;
+            }
+            return $this->items;
         }
         
         /**
